@@ -25,7 +25,7 @@ const BegenBolumu = (props) => {
           onClick={handleLike}
           style={{color: beniBegeniyorMusun ? "red" : "inherit"}}
           className="like-section-wrapper">
-          <FontAwesomeIcon icon={faHeart} />
+          <FontAwesomeIcon icon={faHeart} onClick={gonderiyiBegen} />
         </div>
         <div className="like-section-wrapper">
           <FontAwesomeIcon icon={faComment} />

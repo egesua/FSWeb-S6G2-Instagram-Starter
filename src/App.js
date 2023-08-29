@@ -16,45 +16,44 @@ import "./App.css";
 
 const App = () => {
   // Gönderi nesneleri dizisini tutmak için "gonderiler" adlı bir state oluşturun, **sahteVeri'yi yükleyin**.
-  const [data, setData] = useState(sahteVeri);
-  const [aramaKriteri, setAramaKriteri] = useState();
+  const [posts, setPosts] = useState(sahteVeri);
+  const [search, setSearch] = useState();
+  const searchChangeHandler = (e) => {
+    const {value} = e.target;
+    setSearch(value);
+    const searchResult = sahteVeri.filter((item) => {
+      return item.username.includes(search);
+    });
+    setPosts(searchResult);
+  };
 
+  const [begenilenler, setBegenilenler] = useState([]);
 
   const gonderiyiBegen = (gonderiID) => {
 
-    console.log("gonderiyiBegen tetiklendi", gonderiID);
-
-    const newData = [...data];
-
-    newData.map((data) => {
-      if(data.id === gonderiID) {
-        data.likes += 1;
+    const guncelPosts = posts.map((item) => {
+      if(item.id === gonderiID) {
+        if(!begenilenler.includes(gonderiID)) {
+          item.likes++;
+          setBegenilenler([...begenilenler, gonderiID]);
+        } else {
+          item.likes--;
+          begenilenler.splice(begenilenler.indexOf(gonderiID), 1)
+          setBegenilenler([...begenilenler]);
+        }
       }
-      return data;
-    })
+      return item;
+    });
 
-    setData(newData);
-    
-    const handleSearch = (term) => {
-      setAramaKriteri(term);
-      console.log("handleSearch event", term);
-      if(!term) {
-        console.log("term yoksa");
-        setData(sahteVeri);
-      } else {
-        const filteredGonderiler = data.filter((gonderi) => {
-          return gonderi.username.includes(term);
-        });
-        setData(filteredGonderiler);
-      }
-    }
+    setPosts(guncelPosts);
+
   };
-
+    
   return (
     <div className="App">
-      <AramaCubugu aramaKriteri = {aramaKriteri} aramaFonksiyonu = {handleSearch} />
+      <AramaCubugu search = {search} changeHandler = {searchChangeHandler} />
 
-      <Gonderiler gonderilerProp = {data} gonderiyiBegen = {gonderiyiBegen} />
+      <Gonderiler gonderiyiBegen = {gonderiyiBegen} gonderiler = {posts} />
     </div>
   );
 };

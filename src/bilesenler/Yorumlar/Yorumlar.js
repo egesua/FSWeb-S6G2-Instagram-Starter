@@ -8,9 +8,9 @@ const Yorumlar = props => {
 
   return (
     <div>
-      {yorumlar.map((yorum, ind) => {
-        return <Yorum key = {ind} yorum = {yorum} />
-      })}
+      {yorumlar.map((item) => (
+        <Yorum yorum = {item} key = {item.id} />
+      ))}
     </div>
   );
 };

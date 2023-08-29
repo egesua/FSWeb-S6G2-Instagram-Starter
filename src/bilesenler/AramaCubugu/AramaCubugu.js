@@ -10,16 +10,15 @@ import {
 import "./AramaCubugu.css";
 
 const AramaCubugu = (props) => {
-  const handleChange = (e) => {
-    props.aramaFonksiyonu(e.target.value);
-  };
+  const {search, changeHandler} = props;
+
   return (
     <div className="search-bar-wrapper">
       <div className="social">
         <FontAwesomeIcon icon={faInstagram} />
       </div>
       <form className="search-form">
-        <input type="text" placeholder="Arama" onChange={(evt) => handleChange(evt)} value = {props.aramaKriteri} />
+        <input type="text" placeholder="Arama" onChange={changeHandler} value = {search} />
       </form>
       <div className="social-wrapper">
         <div className="social">
@@ -34,6 +33,6 @@ const AramaCubugu = (props) => {
       </div>
     </div>
   );
-};
+  };
 
 export default AramaCubugu;
